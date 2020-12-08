@@ -4,8 +4,7 @@ Mtech2020 cyber security project to create a vulnerable site for SQL injection, 
 Rules
 - Follow the standard plagiarism guidelines
 - The project should be using version control system
-- The project should be deployed in your local system and it will be reviewed during
-## viva
+- The project should be deployed in your local system and it will be reviewed during viva
 - Licencing should be taken care of if you are planning to use any external resources
 - It is recommended to give more importance to the functionality rather than the UI of the web application
 ## Project Requirements
@@ -13,7 +12,6 @@ Create a web application with the following requirements.
 ## Landing page
 - The website should have a static webpage with buttons to login page as well as
 ## register page
-- Register page
 - Registration form should contain the following fields.
 1. Name
 2. email address
