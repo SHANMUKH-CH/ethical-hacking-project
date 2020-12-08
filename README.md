@@ -19,7 +19,7 @@ Create a web application with the following requirements.
 2. email address
 3. password
 4. password confirmation
-### Password and Password confirmation check should be done before inserting into the database, otherwise it should throw an error
+- Password and Password confirmation check should be done before inserting into the database, otherwise it should throw an error
 - Details for the user table in the database have been provided below. Choose a primary key for your database.
 1. id - int
 2. Name - varchar(30)
