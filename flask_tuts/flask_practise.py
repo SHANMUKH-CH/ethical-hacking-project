@@ -1,5 +1,6 @@
 from flask import Flask, render_template
-from flask.templating import render_template #package #class
+from flask.templating import render_template
+import jinja2 #package #class
 app = Flask(__name__)
 #assigining instance of Flask class main to app 
 #('/') is associated with the home function that returns a 
@@ -19,10 +20,21 @@ app = Flask(__name__)
 # @app.route('/register')
 # def register(): #register page
 #     return '<h1>Bruh! do you want to register?</h1>' #register
-
+#jinja2 {{}} - variable
+# for loops and if statements - {% %}
 @app.route('/')
 def index():
-    return render_template('basic.html')
+    user_login = True #fale - #if or #else
+    mynum=[1,2,3,4,5,6,7,8,9,10]
+    name_variable='shan'
+    letters = list(name_variable)
+    kitty_dictionary={'kitty_name':'shan'}
+    return render_template('basic.html', 
+                           my_variable=name_variable, 
+                           letters=letters,
+                           kitty_dictionary=kitty_dictionary,
+                           mynum=mynum,
+                           user_login=user_login)
 if __name__ == '__main__':
     app.run(debug=True)#run method in Flask class #debug for real time changes,
     #dangerous becareful while production set it off
