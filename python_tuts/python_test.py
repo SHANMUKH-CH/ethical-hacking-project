@@ -22,4 +22,3 @@ if __name__ == '__main__':
     print(account1.balance)
     account1.deposit(50)
     account1.withdraw(200000)
-    
