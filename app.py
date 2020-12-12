@@ -30,5 +30,10 @@ def sp(foo):
 def thank_you():
   email = request.args.get('email')
   return render_template('thank_you.html', email=email[:8])
+
+@app.errorhandler(404)
+def pnf(errorhandler):
+  return "<h1>Page not found 404 error</h1>",404
+
 if __name__ == '__main__':
   app.run(host='127.0.0.1', port=8000, debug=True)
