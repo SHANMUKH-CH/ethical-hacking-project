@@ -10,7 +10,7 @@ Rules
 ## Project Requirements
 Create a web application with the following requirements.
 ## Landing page
-- The website should have a static webpage with buttons to login page as well as
+- The website should have a static webpage with buttons to login page as well as register
 ## register page
 - Registration form should contain the following fields.
 1. Name
