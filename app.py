@@ -1,4 +1,7 @@
+import re
+from typing import NoReturn
 from flask import Flask, render_template, request
+
 app = Flask(__name__)
 
 @app.route('/', methods=['GET','POST'])
@@ -29,7 +32,11 @@ def sp(foo):
 @app.route('/thank_you')
 def thank_you():
   email = request.args.get('email')
-  return render_template('thank_you.html', email=email[:8])
+  regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
+  if (re.search(regex, email)):
+    return render_template('thank_you.html', email=email[:8])
+  else:
+    return render_template('emailvalidcheck.html')
 
 @app.errorhandler(404)
 def pnf(errorhandler):
