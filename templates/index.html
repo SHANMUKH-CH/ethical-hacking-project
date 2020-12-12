@@ -6,10 +6,12 @@
     <title></title>
 </head>
 <body>
+    {% block content %}
     <h1>Ethical Hacking Project</h1>
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="{{ url_for('login')}}">Login</a>
         <a class="navbar-brand" href="{{ url_for('reg')}}">Register</a>
     </nav>
+    {% endblock %}
 </body>
 </html>
