@@ -28,6 +28,7 @@ def sp(foo):
 
 @app.route('/thank_you')
 def thank_you():
-  return "<h1>Thank you</h1>"
+  email = request.args.get('email')
+  return render_template('thank_you.html', email=email[:8])
 if __name__ == '__main__':
   app.run(host='127.0.0.1', port=8000, debug=True)
