@@ -29,12 +29,19 @@ def index():
     name_variable='shan'
     letters = list(name_variable)
     kitty_dictionary={'kitty_name':'shan'}
-    return render_template('basic.html', 
+    return render_template(
+                           'basic.html', 
                            my_variable=name_variable, 
                            letters=letters,
                            kitty_dictionary=kitty_dictionary,
                            mynum=mynum,
-                           user_login=user_login)
+                           user_login=user_login
+                           )
+def a():
+    
+    pass
+
+    
 if __name__ == '__main__':
     app.run(debug=True)#run method in Flask class #debug for real time changes,
     #dangerous becareful while production set it off
