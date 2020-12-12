@@ -1,6 +1,5 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 app = Flask(__name__)
-
 
 @app.route('/', methods=['GET','POST'])
 def index():
@@ -25,7 +24,10 @@ def pp():
 
 @app.route('/searchpage')
 def sp(foo):
-    return render_template('searchpage.html')
-  
+  return render_template('searchpage.html')
+
+@app.route('/thank_you')
+def thank_you():
+  return "<h1>Thank you</h1>"
 if __name__ == '__main__':
   app.run(host='127.0.0.1', port=8000, debug=True)
