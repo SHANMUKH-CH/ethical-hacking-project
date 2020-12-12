@@ -1,16 +1,18 @@
 {% extends "index.html" %}
 {% block content %}
-<h1>Login page</h1>
-<form action="{{url_for('thank_you')}}">
-        <label for="email">Email:</label>
-        <input type="text" name="email" placeholder="id@email.com">
-        <label for="password">Password:</label>
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" name="" value="Submit">
-</form>
-<br>
-<p>Bruh, not registered!?</p>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('reg')}}">Register</a>
-</nav>
+<div class="jumbotron">
+        <h1>Login page</h1>
+        <form action="{{url_for('thank_you')}}">
+                <label for="email">Email:</label>
+                <input type="text" name="email" placeholder="id@email.com">
+                <label for="password">Password:</label>
+                <input type="password" name="password" placeholder="password">
+                <input type="submit" name="" value="Submit">
+        </form>
+        <br>
+        <p>Bruh, not registered!?</p>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a class="navbar-brand" href="{{ url_for('reg')}}">Register</a>
+        </nav>
+</div>
 {% endblock %}
