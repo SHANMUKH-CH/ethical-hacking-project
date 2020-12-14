@@ -34,7 +34,7 @@ def thank_you():
   email = request.args.get('email')
   regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
   if (re.search(regex, email)):
-    return render_template('thank_you.html', email=email[:8])
+    return render_template('homepage.html', email=email[:8])
   else:
     return render_template('emailvalidcheck.html')
 
