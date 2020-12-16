@@ -18,14 +18,17 @@ def reg():
   return render_template('register.html')
 
 @app.route('/homepage')
+#xss_stored
 def hp():
   return render_template('homepage.html')
 
 @app.route('/profilepage')
+#csrf_attack
 def pp():
   return render_template('profilepage.html')
 
 @app.route('/searchpage')
+#sql_injection
 def sp():
   return render_template('searchpage.html')
 
