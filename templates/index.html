@@ -1,16 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>Index Page</title>
+    <title> Index </title>
 </head>
-<body>
-    {% block content %}
-    <h1>Ethical Hacking Project</h1>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('login')}}">Login</a>
-        <a class="navbar-brand" href="{{ url_for('reg')}}">Register</a>
-    </nav>
-    {% endblock %}
+<body></br></br></br></br></br>
+    <div align="center">
+        <div align="center" class="border">
+            <div class="header">
+                <h1 class="word">Index</h1>
+            </div></br></br></br>
+            <h1 class="bottom">
+                Hi {{session.username}}!!</br></br> Welcome to the index page...
+            </h1></br></br></br>
+            <a href="{{ url_for('logout') }}" class="btn">Logout</a>
+        </div>
+    </div>
 </body>
 </html>

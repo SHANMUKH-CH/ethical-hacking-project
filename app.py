@@ -1,63 +1,69 @@
-import re, os
-from flask import Flask, render_template, request
-from flask_mysqldb import MySQL
- 
+import re
+from flask import Flask, redirect,render_template, request,session,url_for
+from flask_mysqldb import MySQL,MySQLdb
+
 app = Flask(__name__)
 
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
 app.config['MYSQL_PASSWORD']=''
 app.config['MYSQL_DB']='shanmukh'
+app.config['MYSQL_CURSORCLASS']='DictCursor'
 mysql = MySQL(app)
 
-@app.route('/', methods=['GET','POST'])
-def index():
-  #a static webpage with buttons to login page as well as register
-  return render_template('index.html')
-
-@app.route('/db')
-def func_name():
-  cur=mysql.connection.cursor()
-  cur.execute("SELECT * FROM registration")
-  fetchdata = cur.fetchall()
-  cur.close()
-  return render_template('expression.html',data=fetchdata)
-
-@app.route('/login')
+@app.route('/')
+@app.route('/login',methods=["GET","POST"])
 def login():
-  return render_template('login.html')
+    message = '' 
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form: 
+        username = request.form['username'] 
+        password = request.form['password'] 
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+        cursor.execute('SELECT * FROM registration WHERE username = % s AND password = % s', (username, password, )) 
+        account = cursor.fetchone() 
+        if account: 
+            session['loggedin'] = True
+            session['id'] = account['id'] 
+            session['username'] = account['username'] 
+            msg = 'Logged in successfully !'
+            return render_template('index.html', msg = msg) 
+        else: 
+            msg = 'Incorrect username / password !'
+    return render_template('login.html', msg = message)
 
-@app.route('/register')
-def reg():
-  return render_template('register.html')
+@app.route('/register', methods =['GET', 'POST']) 
+def register(): 
+    msg = '' 
+    if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form : 
+        username = request.form['username'] 
+        password = request.form['password'] 
+        email = request.form['email'] 
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor) 
+        cursor.execute('SELECT * FROM registration WHERE username = % s', (username, )) 
+        account = cursor.fetchone() 
+        if account: 
+            msg = 'Account already exists !'
+        elif not re.match(r'[^@]+@[^@]+\.[^@]+', email): 
+            msg = 'Invalid email address !'
+        elif not re.match(r'[A-Za-z0-9]+', username): 
+            msg = 'Username must contain only characters and numbers !'
+        elif not username or not password or not email: 
+            msg = 'Please fill out the form !'
+        else: 
+            cursor.execute('INSERT INTO registration VALUES (NULL, % s, % s, % s)', (username, password, email, )) 
+            mysql.connection.commit() 
+            msg = 'You have successfully registered !'
+    elif request.method == 'POST': 
+        msg = 'Please fill out the form !'
+    return render_template('register.html', msg = msg)
 
-@app.route('/homepage')
-#xss_stored
-def hp():
-  return render_template('homepage.html')
-
-@app.route('/profilepage')
-#csrf_attack
-def pp():
-  return render_template('profilepage.html')
-
-@app.route('/searchpage')
-#sql_injection
-def sp():
-  return render_template('searchpage.html')
-
-@app.route('/thank_you')
-def thank_you():
-  email = request.args.get('email')
-  regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
-  if (re.search(regex, email)):
-    return render_template('homepage.html', email=email[:8])
-  else:
-    return render_template('emailvalidcheck.html')
-
-@app.errorhandler(404)
-def pnf(errorhandler):
-  return "<h1>Page not found 404 error</h1>",404
+@app.route('/logout') 
+def logout(): 
+    session.pop('loggedin', None) 
+    session.pop('id', None) 
+    session.pop('username', None) 
+    return redirect(url_for('login')) 
 
 if __name__ == '__main__':
+  app.secret_key='secret'
   app.run(host='127.0.0.1', port=8000, debug=True)
