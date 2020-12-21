@@ -1,8 +1,25 @@
-import re
-from typing import NoReturn
+import re, os
 from flask import Flask, render_template, request
+from flask_sqlalchemy import SQLAlchemy
 
+basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
+app.config['SQLALCHEMY_DATABASE_URI'] ='sqlite:///'+os.path.join(basedir,'database.sqlite')
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS']=False
+db=SQLAlchemy(app)
+####
+class users(db.Model):
+  #manual table choice!
+  __tablename__ = 'users'
+  
+  #columms
+  id = db.Column(db.Integer,primary_key=True)
+  name = db.Column(db.Text)
+  def __init__(self,id,name):
+    self.id = id
+    self.name = name
+  def __repr__(self):
+    return f'users {self.id} {self.name}'
 
 @app.route('/', methods=['GET','POST'])
 def index():
