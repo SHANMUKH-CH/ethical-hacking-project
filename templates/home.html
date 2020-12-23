@@ -1,6 +1,5 @@
 {% autoescape false %}
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Home</title>
@@ -26,6 +25,7 @@
                 {% endfor %}
                 <!-- Write form -->
                 <form action="/" method="POST">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
                     <input type="text" name="comment" placeholder="Comment" autocomplete="off" />
                     <input type="submit" value="Submit new comment" />
                 </form>
@@ -34,6 +34,5 @@
         </div>
     </div>
 </body>
-
 </html>
 {% endautoescape %}

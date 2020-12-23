@@ -2,7 +2,13 @@ import re
 import db
 from flask import Flask, redirect,render_template, request,session,url_for
 from flask_mysqldb import MySQL,MySQLdb
+from flask_wtf.csrf import CSRFProtect
+
 app = Flask(__name__)
+
+csrf = CSRFProtect(app)
+
+app.secret_key='kingkongdingdong'
 
 app.config['MYSQL_HOST']='localhost'
 app.config['MYSQL_USER']='root'
@@ -37,7 +43,7 @@ def login():
             msg = 'Incorrect username / password !'
     return render_template('login.html', msg = message)
 
-@app.route('/register', methods =['GET', 'POST']) 
+@app.route('/register', methods =['GET', 'POST'])
 def register(): 
     msg = '' 
     if request.method == 'POST' and 'username' in request.form and 'password' in request.form and 'email' in request.form : 
@@ -66,13 +72,18 @@ def register():
         msg = 'Bruhh Please fill out the form !'
     return render_template('register.html', msg = msg)
 
-@app.route('/logout') 
+@app.route('/update', methods=['GET', 'POST'])
+@csrf.exempt
+def update():
+    
+    pass
+
+@app.route('/logout')
 def logout(): 
     session.pop('loggedin', None) 
     session.pop('id', None) 
     session.pop('username', None) 
-    return redirect(url_for('login')) 
+    return redirect(url_for('login'))
 
 if __name__ == '__main__':
-    app.secret_key = 'secret'
     app.run(host='127.0.0.1', port=8000, debug=True)
