@@ -1,4 +1,5 @@
 import re
+import db
 from flask import Flask, redirect,render_template, request,session,url_for
 from flask_mysqldb import MySQL,MySQLdb
 app = Flask(__name__)
@@ -12,7 +13,11 @@ mysql = MySQL(app)
 
 @app.route('/',methods=['GET', 'POST'])
 def index():
-    pass
+    if request.method == 'POST':
+        db.add_comment(request.form['comment'])
+    search_query = request.args.get('q')
+    comments = db.get_comments(search_query)
+    return render_template('home.html',comments=comments,search_query=search_query)
 @app.route('/login',methods=["GET","POST"])
 def login():
     message = '' 
