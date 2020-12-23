@@ -12,12 +12,14 @@
             </div></br>
             <h1 class="bottom">
                 Hi {{session.username}}, Welcome!
+                <!-- search for users here -->
+                <form action="{{url_for('search')}}" method="post">
+                    <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+                    <input id="username" name="username" type="text" placeholder="username" autocomplete="off" />
+                    <input type="submit" value="Search"/>
+                </form>
                 <!-- Comments -->
-                {% if not search_query %}
                 <h3>Showing all comments:</h3>
-                {% else %}
-                <h3>Showing comments containing "{{ search_query }}":</h3>
-                {% endif %}
                 {% for comment in comments %}
                 <div>
                     <p>{{ comment }}</p>
@@ -30,6 +32,7 @@
                     <input type="submit" value="Submit new comment" />
                 </form>
             </h1></br></br></br>
+            <a href="{{url_for('update')}}" class="btn">Update</a>
             <a href="{{ url_for('logout') }}" class="btn">Logout</a>
         </div>
     </div>

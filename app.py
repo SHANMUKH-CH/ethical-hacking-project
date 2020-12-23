@@ -21,9 +21,8 @@ mysql = MySQL(app)
 def index():
     if request.method == 'POST':
         db.add_comment(request.form['comment'])
-    search_query = request.args.get('q')
-    comments = db.get_comments(search_query)
-    return render_template('home.html',comments=comments,search_query=search_query)
+    comments = db.get_comments()
+    return render_template('home.html',comments=comments)
 @app.route('/login',methods=["GET","POST"])
 def login():
     message = '' 
@@ -75,9 +74,21 @@ def register():
 @app.route('/update', methods=['GET', 'POST'])
 @csrf.exempt
 def update():
-    
-    pass
+    return '<h1>hello are you here to update?</h1>'
 
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method == 'POST' and 'username' in request.form:
+        username = request.form['username']
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute("SELECT * FROM registration WHERE username = %s", (username,))    
+        account = cursor.fetchall()
+        if account:
+            return render_template('users.html',account = account)
+        else:
+            return ''' <h1> no such username</h1>
+        <a href="{{ url_for('register') }}" class="btn">register</a>
+        '''
 @app.route('/logout')
 def logout(): 
     session.pop('loggedin', None) 
