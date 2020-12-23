@@ -1,4 +1,6 @@
 import sqlite3
+
+
 def connect_db():
     db = sqlite3.connect('database.db')
     db.cursor().execute('CREATE TABLE IF NOT EXISTS comments '
@@ -6,11 +8,15 @@ def connect_db():
                         'comment TEXT)')
     db.commit()
     return db
+
+
 def add_comment(comment):
     db = connect_db()
     db.cursor().execute('INSERT INTO comments (comment) '
                         'VALUES (?)', (comment,))
     db.commit()
+
+
 def get_comments(search_query=None):
     db = connect_db()
     results = []
