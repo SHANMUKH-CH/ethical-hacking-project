@@ -82,16 +82,18 @@ def register():
 @app.route('/update', methods=['GET', 'POST'])
 @csrf.exempt
 def update():
-    return '<h1>hello are you here to update?</h1>'
+    return '<h1>Hello dearer!</h1>'
 
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
+    #sql injection = admin1'; drop table test;
     if request.method == 'POST' and 'username' in request.form:
         username = request.form['username']
-        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor = mysql.connection.cursor()
         cursor.execute(
-            "SELECT * FROM registration WHERE username = %s", [username, ])
+            "SELECT * FROM registration WHERE username = '%s'" % username)
+        #SELECT * FROM registration WHERE username = %s"(username,))
         account = cursor.fetchall()
         if account:
             return render_template('users.html', account=account)
