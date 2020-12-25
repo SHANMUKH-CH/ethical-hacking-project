@@ -94,7 +94,9 @@ def profile():
                 "UPDATE registration SET username= %s WHERE id=%s", (username, session['id']))
             mysql.connection.commit()
             msg = 'updated!'
-            return render_template('profile.html', msg=msg,account=account)
+            return render_template('profile.html', msg=msg, account=account)
+        return render_template('profile.html', account=account)
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
