@@ -7,12 +7,14 @@
             <td>{{ account['username'] }}</td>
         </tr>
         <tr>
-            <td>Password:</td>
-            <td>{{ account['password'] }}</td>
-        </tr>
-        <tr>
             <td>Email:</td>
             <td>{{ account['email'] }}</td>
         </tr>
     </table>
-</div> 
+</div>
+<h2>UPDATE</h2>
+<form action="{{ url_for('profile') }}" method="post">
+    <div class="msg">{{ msg }}</div>
+    <input id="username" name="username" type="text" placeholder="change Your Username" class="textbox" /></br></br>
+    <input type="submit" class="btn" value="submit"></br </div> 
+</form>

@@ -46,6 +46,7 @@ def login():
             msg = 'Incorrect username / password !'
     return render_template('login.html', msg=message)
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
@@ -78,24 +79,32 @@ def register():
     return render_template('register.html', msg=msg)
 
 
-@app.route('/profile')
+@app.route('/profile', methods=['GET', 'POST'])
+@csrf.exempt
 def profile():
     if 'loggedin' in session:
         cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-        cursor.execute('SELECT * FROM registration WHERE id = %s', (session['id'],))
+        cursor.execute(
+            'SELECT * FROM registration WHERE id = %s', (session['id'],))
         account = cursor.fetchone()
-        return render_template('profile.html', account=account)
-    return redirect(url_for('login'))
+        if request.method == 'POST' and 'username' in request.form:
+            username = request.form['username']
+            cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+            cursor.execute(
+                "UPDATE registration SET username= %s WHERE id=%s", (username, session['id']))
+            mysql.connection.commit()
+            msg = 'updated!'
+            return render_template('profile.html', msg=msg,account=account)
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
-    #sql injection = admin1'; drop table test;
+    # sql injection = admin1'; drop table test;
     if request.method == 'POST' and 'username' in request.form:
         username = request.form['username']
         cursor = mysql.connection.cursor()
         cursor.execute(
             "SELECT * FROM registration WHERE username = '%s'" % username)
-        #SELECT * FROM registration WHERE username = %s"(username,))
+        # SELECT * FROM registration WHERE username = %s"(username,))
         account = cursor.fetchall()
         if account:
             return render_template('users.html', account=account)
