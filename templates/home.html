@@ -1,13 +1,9 @@
 {% autoescape false %}
-<!-- stored xss -->
-<!-- {% autoescape true %} -->
 <html>
-
 <head>
     <meta charset="utf-8">
     <title>Home</title>
 </head>
-
 <body></br></br></br></br></br>
     <div align="center">
         <div align="center" class="border">
@@ -36,11 +32,10 @@
                     <input type="submit" value="Submit new comment" />
                 </form>
             </h1></br></br></br>
-            <a href="{{url_for('update')}}" class="btn">Update</a>
+            <a href="{{url_for('profile')}}" class="btn">profile</a>
             <a href="{{ url_for('logout') }}" class="btn">Logout</a>
         </div>
     </div>
 </body>
-
 </html>
 {% endautoescape %}

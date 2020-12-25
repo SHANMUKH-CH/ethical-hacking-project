@@ -46,7 +46,6 @@ def login():
             msg = 'Incorrect username / password !'
     return render_template('login.html', msg=message)
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     msg = ''
@@ -79,11 +78,14 @@ def register():
     return render_template('register.html', msg=msg)
 
 
-@app.route('/update', methods=['GET', 'POST'])
-@csrf.exempt
-def update():
-    return '<h1>Hello dearer!</h1>'
-
+@app.route('/profile')
+def profile():
+    if 'loggedin' in session:
+        cursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        cursor.execute('SELECT * FROM registration WHERE id = %s', (session['id'],))
+        account = cursor.fetchone()
+        return render_template('profile.html', account=account)
+    return redirect(url_for('login'))
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
