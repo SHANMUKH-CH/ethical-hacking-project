@@ -95,8 +95,9 @@ def profile():
             mysql.connection.commit()
             msg = 'updated!'
             return render_template('profile.html', msg=msg, account=account)
-        return render_template('profile.html', account=account)
-
+        return render_template('profile.html',account=account)
+    else:
+        return render_template('login.html')
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
