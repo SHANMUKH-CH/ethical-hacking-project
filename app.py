@@ -95,9 +95,10 @@ def profile():
             mysql.connection.commit()
             msg = 'updated!'
             return render_template('profile.html', msg=msg, account=account)
-        return render_template('profile.html',account=account)
+        return render_template('profile.html', account=account)
     else:
         return render_template('login.html')
+
 
 @app.route('/search', methods=['GET', 'POST'])
 def search():
@@ -107,6 +108,7 @@ def search():
         cursor = mysql.connection.cursor()
         cursor.execute(
             "SELECT * FROM registration WHERE username = '%s'" % username)
+        # user input is concatenated directly into the query
         # SELECT * FROM registration WHERE username = %s"(username,))
         account = cursor.fetchall()
         if account:
